@@ -1,8 +1,5 @@
-# TODO: Can we conditionalize? Maybe something like --> https://github.com/icy/bocker
-#ENV CENTOS_TAG=6.6
-#FROM centos:${CENTOS_TAG}
-FROM centos:6.6
-MAINTAINER Jun Heider<jun@realeyes.com>
+FROM centos:6.9
+MAINTAINER Sarah Allen<sarah@veriskope.com>
 
 #### Download links
 # http://download.macromedia.com/pub/adobemediaserver/5_0_10/AdobeMediaServer5_x64.tar.gz
@@ -14,7 +11,6 @@ MAINTAINER Jun Heider<jun@realeyes.com>
 # 5.0.3 is different - http://download.macromedia.com/pub/adobemediaserver/AdobeMediaServer5_x64.tar.gz
 ENV AMS_VERSION=5_0_8
 ENV DO_YUM_UPDATE=true
-ENV DO_COPY_CERTS=false
 ENV DO_COPY_ADAPTOR_XML=false
 
 RUN rpm --import https://getfedora.org/static/0608B895.txt
@@ -36,8 +32,8 @@ RUN sed -i -e 's:read cont < /dev/tty:#read cont < /dev/tty:g' installAMS
 COPY conf/${AMS_VERSION}/installAMS.input installAMS.input
 
 RUN ./installAMS < installAMS.input
+
 # TODO: Can we conditionalize?
-#COPY certs /opt/adobe/certs
 #COPY conf/${AMS_VERSION}/Adaptor.xml /opt/adobe/ams/conf/_defaultRoot_/Adaptor.xml
 
 # CLEANUP
