@@ -16,8 +16,6 @@ ENV AMS_VERSION=5_0_8
 ENV DO_YUM_UPDATE=true
 ENV DO_COPY_ADAPTOR_XML=false
 
-RUN rpm --import https://getfedora.org/static/0608B895.txt
-
 RUN if ${DO_YUM_UPDATE} == 'true'; then yum update -y; fi  
 RUN yum install -y tar python-setuptools
 RUN easy_install supervisor
