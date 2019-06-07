@@ -16,7 +16,7 @@ ENV DO_COPY_ADAPTOR_XML=false
 RUN if ${DO_YUM_UPDATE} == 'true'; then yum update -y; fi  
 
 WORKDIR /tmp
-RUN curl -O http://download.macromedia.com/pub/adobemediaserver/${AMS_VERSION}/AdobeMediaServer5_x64.tar.gz
+RUN curl -O https://download.macromedia.com/pub/adobemediaserver/${AMS_VERSION}/AdobeMediaServer5_x64.tar.gz
 WORKDIR /tmp/ams_${AMS_VERSION}
 RUN tar zxvf ../AdobeMediaServer5_x64.tar.gz -C . --strip-components=1
 RUN rm -Rf License.txt
