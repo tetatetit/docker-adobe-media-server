@@ -14,11 +14,6 @@ ENV DO_YUM_UPDATE=true
 ENV DO_COPY_ADAPTOR_XML=false
 
 RUN if ${DO_YUM_UPDATE} == 'true'; then yum update -y; fi  
-RUN yum install -y tar python-setuptools
-RUN easy_install supervisor
-
-RUN mkdir -p /var/log/supervisor
-COPY conf/supervisord.conf /etc/supervisord.conf
 
 WORKDIR /tmp
 RUN curl -O http://download.macromedia.com/pub/adobemediaserver/${AMS_VERSION}/AdobeMediaServer5_x64.tar.gz
@@ -43,5 +38,3 @@ VOLUME ["/opt/adobe/ams/applications"]
 # Need to map these to host ports with docker run
 EXPOSE 80 443 1111 1935
 
-# See if we rework this to also start ams 
-CMD ["/usr/bin/supervisord"]
