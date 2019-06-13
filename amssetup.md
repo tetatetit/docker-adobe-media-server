@@ -19,6 +19,4 @@ service owner                  = ams
 service user                   = ams
 service group                  = ams
 
-Run as daemon                  = Yes
-
-
+Run as daemon                  = No
