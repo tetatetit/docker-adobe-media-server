@@ -1,0 +1,79 @@
+set timeout -1
+
+spawn ./installAMS
+ 
+expect "Please enter your Adobe Media Server 5 serial number.\r"
+ 
+send -- "\r"
+ 
+expect "*Would you like to try again? y/n:  Default ?n?: "
+
+send -- "\r"
+
+expect "The installer will install Adobe Media Server 5 in the\r
+following directory\r
+Default ?/opt/adobe/ams?: "
+
+send -- "\r"
+
+expect "Please enter the administrative username: "
+
+send -- "admin\r"
+  
+expect "Please enter the administrative password: "
+send -- "123456789\r"
+
+expect "Confirm password: "
+send -- "123456789\r"
+
+expect "Default user ?ams?: "
+send -- "\r"
+
+expect "Do you want to create it?(y/n)\r\nDefault ?y?: "
+send -- "\r"
+
+expect "Default group ?ams?:"
+send -- "\r"
+
+expect "Do you want to install apache? (y/n)\r
+Default ?y?: "
+send -- "\r"
+
+expect "Would you like for Apache or AMS to listen on port 80?\r
+Enter 'y' for Apache, 'n' for AMS. (y/n)\r
+Default ?y?: "
+send -- "\r"
+
+expect "If you know the interface(IP address) that AMS will listen on, please enter it here.\r
+If not, AMS will try to auto-detect it.\r
+Default ??: "
+send -- "\r"
+ 
+expect "Please enter the user that Apache will eventually run as.\r
+Default user ?ams?: "
+send -- "\r"
+
+expect "Please enter the Adobe Media Server port(s), comma-separated\r
+Default ?1935?: "
+send -- "\r"
+
+expect "Please enter the port to use for the Admin service. You can only specify one\r
+admin port.\r
+Default ?1111?: "
+send -- "\r"
+
+expect "Do you want the Adobe Media Server service to run as a\r
+daemon? (y/n)\r
+Default ?y?: "
+send -- "n\r"
+
+expect "Do you want to start the Adobe Media Server\r
+after the installation is done? (y/n)\r
+Default ?y?: "
+send -- "n\r"
+
+expect "Proceed with the installation? (y/n/q): "
+send -- "y\r"
+
+expect "The Adobe Media Server installation is complete.\r\n\r\n"
+expect eof
