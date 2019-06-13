@@ -1,8 +1,5 @@
-# TODO: Can we conditionalize? Maybe something like --> https://github.com/icy/bocker
-#ENV CENTOS_TAG=6.6
-#FROM centos:${CENTOS_TAG}
 FROM centos:6.6
-MAINTAINER Jun Heider<jun@realeyes.com>
+MAINTAINER Sarah Allen <sarah@veriskope.com>
 
 #### Download links
 # http://download.macromedia.com/pub/adobemediaserver/5_0_10/AdobeMediaServer5_x64.tar.gz
