@@ -4,7 +4,6 @@ MAINTAINER Sarah Allen <sarah@veriskope.com>
 #### Manual install instructions
 # https://helpx.adobe.com/adobe-media-server/install/install-media-server.html
 
-
 #### Download links
 # http://download.macromedia.com/pub/adobemediaserver/5_0_10/AdobeMediaServer5_x64.tar.gz
 # http://download.macromedia.com/pub/adobemediaserver/5_0_9/AdobeMediaServer5_x64.tar.gz
@@ -23,13 +22,9 @@ ENV AMS_VERSION=5_0_8
 # TODO: after gaining more experience with supervisor, should pin the version
 RUN yum update -y                   && \
     yum install -y tar epel-release && \
-    yum install -y python-pip       && \
+    yum install -y monit            && \
     yum install -y expect           && \
     yum clean all
-RUN pip install supervisor
-
-RUN mkdir -p /var/log/supervisor
-COPY conf/supervisord.conf /etc/supervisord.conf
 
 ##############################################################################
 ##### Install media server
@@ -52,8 +47,12 @@ RUN curl -O https://download.macromedia.com/pub/adobemediaserver/${AMS_VERSION}/
 
 # VOLUME ["/opt/adobe/ams/applications"]
 
+COPY /conf/monit.d/* /etc/monit.d/
+COPY ./monit_start.sh /usr/bin/monit_start.sh
+COPY ./monit_stop_all_wait.sh /usr/bin/monit_stop_all_wait.sh
+
 # Need to map these to host ports with docker run
 EXPOSE 80 443 1111 1935
 
 # these are mappped to host ports with docker-compose 
-CMD ["/usr/bin/supervisord -c /etc/supervisord.conf"]
+CMD ["/usr/bin/monit_start.sh"]
