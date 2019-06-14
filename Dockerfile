@@ -56,4 +56,4 @@ RUN curl -O https://download.macromedia.com/pub/adobemediaserver/${AMS_VERSION}/
 EXPOSE 80 443 1111 1935
 
 # these are mappped to host ports with docker-compose 
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord -c /etc/supervisord.conf"]
