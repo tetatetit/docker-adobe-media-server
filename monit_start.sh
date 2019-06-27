@@ -5,7 +5,7 @@
 trap "/usr/bin/monit_stop_all_wait.sh ; exit" EXIT
 
 # Monit will start all apps
-service monit start
+   service monit start -c /etc/monit.d/ams.conf
 
 # Stay up for container to stay alive
 while [ 1 ] ; do
