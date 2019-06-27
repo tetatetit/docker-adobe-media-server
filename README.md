@@ -14,6 +14,22 @@ For debugging, run and start bash
 docker-compose run ams bash
 ```
 
+# Testing the server
+
+
+# Video-on-demand streaming
+
+`vod/media/sample`
+sample1_1000kbps.f4v  sample1_150kbps.f4v   sample1_700kbps.f4v
+sample1_1500kbps.f4v  sample1_500kbps.f4v   sample.flv
+
+
+on some platforms, you may need to rebuild curl from source:
+```
+curl rtmp://localhost:1935/vod/media/sample/sample1_150kbps.f4v
+```
+
+
 
 # Notes
 
