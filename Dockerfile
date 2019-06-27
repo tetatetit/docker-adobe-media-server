@@ -47,9 +47,11 @@ RUN curl -O https://download.macromedia.com/pub/adobemediaserver/${AMS_VERSION}/
 
 # VOLUME ["/opt/adobe/ams/applications"]
 
+# COPY ./linux-bin/dev-tools.sh /usr/bin/.
+# RUN /usr/bin/dev-tools.sh
+
+COPY ./linux-bin/monit* /usr/bin/
 COPY /conf/monit.d/* /etc/monit.d/
-COPY ./monit_start.sh /usr/bin/monit_start.sh
-COPY ./monit_stop_all_wait.sh /usr/bin/monit_stop_all_wait.sh
 
 # Need to map these to host ports with docker run
 EXPOSE 80 443 1111 1935
