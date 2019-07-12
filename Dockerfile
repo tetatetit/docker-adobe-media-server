@@ -24,6 +24,7 @@ RUN yum update -y                   && \
     yum install -y tar epel-release && \
     yum install -y monit            && \
     yum install -y expect           && \
+    yum install -y openssl-devel    && \
     yum clean all
 
 ##############################################################################
@@ -49,8 +50,8 @@ RUN curl -O http://download.veriskope.com/AdobeMediaServer5_x64_5.0.15_Linux.tar
 
 # VOLUME ["/opt/adobe/ams/applications"]
 
-# COPY ./linux-bin/dev-tools.sh /usr/bin/.
-# RUN /usr/bin/dev-tools.sh
+COPY ./dev-tools.sh /tmp/.
+RUN /tmp/dev-tools.sh
 
 COPY ./linux-bin/monit* /usr/bin/
 COPY /conf/monit.d/* /etc/monit.d/
