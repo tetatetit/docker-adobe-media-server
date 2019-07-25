@@ -12,7 +12,7 @@ MAINTAINER Sarah Allen <sarah@veriskope.com>
 # http://download.macromedia.com/pub/adobemediaserver/5_0_6/AdobeMediaServer5_x64.tar.gz
 # http://download.macromedia.com/pub/adobemediaserver/5_0_5/AdobeMediaServer5_x64.tar.gz
 # 5.0.3 is different - http://download.macromedia.com/pub/adobemediaserver/AdobeMediaServer5_x64.tar.gz
-ENV AMS_VERSION=5_0_8
+ENV AMS_VERSION=5_1_5
 
 ##############################################################################
 # yum install will update lists of available packages
