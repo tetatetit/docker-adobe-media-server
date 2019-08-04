@@ -11,7 +11,7 @@ docker-compose build
 
 For debugging, run and start bash
 ```
-docker-compose run ams bash
+docker-compose run -p 1935:1935 -p 1111:1111 -p 80:80 ams bash
 ```
 
 to run the server:
@@ -47,6 +47,11 @@ troubleshooting:
 rtmpdump -V -r rtmp://localhost:1935/vod/media/sample.flv -o test.flv
 ```
 
+# Additional tools
+
+send sample file to `live` app via ffmpeg (not installed)
+
+`ffmpeg -i sample.flv -f flv "rtmp://localhost:1935/live"`
 
 # Notes
 
