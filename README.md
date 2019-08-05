@@ -9,9 +9,9 @@ to build the docker container image
 docker-compose build
 ```
 
-For debugging, run and start bash
+Run and start bash (we will be running the server from here). Note: We have to use --service-ports because by default, the [`docker-compose run` command does not map ports](https://docs.docker.com/compose/reference/run/).
 ```
-docker-compose run -p 1935:1935 -p 1111:1111 -p 80:80 ams bash
+docker-compose run --service-ports ams bash
 ```
 
 to run the server:
@@ -19,10 +19,16 @@ to run the server:
 /opt/adobe/ams/server start
 ```
 
-Right now you need to stay logged into bash to keep the server running.
+Although the output says:
+
+> Starting Adobe Media Server (please check /var/log/messages)
+
+the actual location of the logs is `/opt/adobe/ams/logs/`. There are several log files.
+
+Right now you need to stay logged into bash to keep the server running (see TODO below).
 
 TODO:
-* Keep the server running with monit
+Currently we use `docker-compose run` instead of `docker-compose up` because docker expects whatever is run in the container to send information to stdout/stderr, but AMS writes log files instead (similar to nginx, apache, and many others). There are a few ways to redirect logfiles to stdout/stderr, including tools like [dockerize](https://github.com/jwilder/dockerize).
 * Make it so LD_LIBRARY_PATH isn't needed (or add to .bashrc or something)
 
 # Testing the server
@@ -42,22 +48,20 @@ or
 curl rtmp://localhost:1935/vod/media/sample.flv > test.flv
 ```
 
-troubleshooting:
+### troubleshooting
+To test whether you can connect to AMS, you can download the sample.flv file using this command:
 ```
 rtmpdump -V -r rtmp://localhost:1935/vod/media/sample.flv -o test.flv
 ```
+If you want to check against the original, you can copy it using this command:
+```
+docker cp <container id>:/opt/adobe/ams/applications/vod/media/sample.flv ./sample.flv
+```
+sample.flv and test.flv should be identical.
 
 # Additional tools
 
 send sample file to `live` app via ffmpeg (not installed)
 
 `ffmpeg -i sample.flv -f flv "rtmp://localhost:1935/live"`
-
-# Notes
-
-Experimenting with Monit instead of Supervisor to keep the docker container
-running (so AMS will keep running, even when we don't have a bash terminal
-open).
-
-Centos 6.* comes with Python 2.6. Supervisor requires Python 2.7 but we can’t just replace the installed Python with v2.7 because it’s reportedly used by the OS internally.
 
