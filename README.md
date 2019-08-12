@@ -4,6 +4,9 @@ A Docker setup for running Adobe Media server
 This is a work-in-progress -- docker container installs the server, but
 doesn't actually run it yet (see "notes" below).
 
+By default, a trial version of the Adobe Media Server will be installed.
+If you have a license file, copy into the folder `lic`.
+
 to build the docker container image
 ```
 docker-compose build

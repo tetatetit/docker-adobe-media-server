@@ -56,6 +56,9 @@ RUN /tmp/dev-tools.sh
 COPY ./linux-bin/monit* /usr/bin/
 COPY /conf/monit.d/* /etc/monit.d/
 
+COPY lic/* /opt/adobe/ams/lic/
+WORKDIR /opt/adobe/ams
+
 # Need to map these to host ports with docker run
 EXPOSE 80 443 1111 1935
 
