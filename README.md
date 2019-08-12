@@ -31,7 +31,7 @@ the actual location of the logs is `/opt/adobe/ams/logs/`. There are several log
 Right now you need to stay logged into bash to keep the server running (see TODO below).
 
 TODO:
-Currently we use `docker-compose run` instead of `docker-compose up` because docker expects whatever is run in the container to send information to stdout/stderr, but AMS writes log files instead (similar to nginx, apache, and many others). There are a few ways to redirect logfiles to stdout/stderr, including tools like [dockerize](https://github.com/jwilder/dockerize).
+* Currently we use `docker-compose run` instead of `docker-compose up` because docker expects whatever is run in the container to send information to stdout/stderr, but AMS writes log files instead (similar to nginx, apache, and many others). There are a few ways to redirect logfiles to stdout/stderr, including tools like [dockerize](https://github.com/jwilder/dockerize).
 * Make it so LD_LIBRARY_PATH isn't needed (or add to .bashrc or something)
 
 # Testing the server
@@ -51,7 +51,11 @@ or
 curl rtmp://localhost:1935/vod/media/sample.flv > test.flv
 ```
 
-### troubleshooting
+## Troubleshooting
+
+Test whether ports are open to docker container
+
+
 To test whether you can connect to AMS, you can download the sample.flv file using this command:
 ```
 rtmpdump -V -r rtmp://localhost:1935/vod/media/sample.flv -o test.flv
@@ -62,7 +66,7 @@ docker cp <container id>:/opt/adobe/ams/applications/vod/media/sample.flv ./samp
 ```
 sample.flv and test.flv should be identical.
 
-# Additional tools
+## Additional tools
 
 send sample file to `live` app via ffmpeg (not installed)
 

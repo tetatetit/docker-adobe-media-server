@@ -19,10 +19,9 @@ ENV AMS_VERSION=5_1_5
 # and install their fresh / current versions.
 # Every time we build it  may end up with different package versions
 # which is intended for now.
-# TODO: after gaining more experience with supervisor, should pin the version
+# TODO: after finalizing dockerfile, should pin the versions of dependencies
 RUN yum update -y                   && \
     yum install -y tar epel-release && \
-    yum install -y monit            && \
     yum install -y expect           && \
     yum install -y openssl-devel    && \
     yum clean all
@@ -30,8 +29,8 @@ RUN yum update -y                   && \
 ##############################################################################
 ##### Install media server
 WORKDIR /tmp/ams
-# RUN yum install -y expect && yum clean all
-COPY conf/${AMS_VERSION}/installAMS.input installAMS.input
+# should have per version install.exp
+# COPY conf/${AMS_VERSION}/installAMS.input installAMS.input
 COPY install.exp .
 
 # note 5.0.15 is labeled .tar.gz but not actually gzipped
@@ -53,14 +52,11 @@ RUN curl -O http://download.veriskope.com/AdobeMediaServer5_x64_5.0.15_Linux.tar
 COPY ./dev-tools.sh /tmp/.
 RUN /tmp/dev-tools.sh
 
-COPY ./linux-bin/monit* /usr/bin/
-COPY /conf/monit.d/* /etc/monit.d/
+# COPY ./linux-bin/* /usr/bin/
 
 COPY lic/* /opt/adobe/ams/lic/
 WORKDIR /opt/adobe/ams
 
-# Need to map these to host ports with docker run
+# Need to map these to host ports with docker run / compose
 EXPOSE 80 443 1111 1935
 
-# these are mappped to host ports with docker-compose
-CMD ["/usr/bin/monit_start.sh"]
