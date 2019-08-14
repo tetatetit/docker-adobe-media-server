@@ -69,6 +69,17 @@ sample.flv and test.flv should be identical.
 ## Additional tools
 
 send sample file to `live` app via ffmpeg (not installed)
+```
+ffmpeg -i sample.flv -f flv "rtmp://localhost:1935/live/your_stream_id"
+```
+or
+```
+ffmpeg -i sample.flv -f flv "rtmps://localhost:1935/live/your_stream_id"
+```
+or
+```
+ffmpeg -i sample.flv -f flv "rtmpt://localhost:1935/live/your_stream_id"
+```
 
-`ffmpeg -i sample.flv -f flv "rtmp://localhost:1935/live"`
-
+> Tested on ffmpeg v3.4.6 in official [Ubuntu 18.04](https://hub.docker.com/_/ubuntu?tab=tags)
+while v2.8.15 in [Ubuntu 16.04](https://hub.docker.com/_/ubuntu?tab=tags) did not work with RTMPS
