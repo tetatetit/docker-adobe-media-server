@@ -54,6 +54,17 @@ RUN /tmp/dev-tools.sh
 
 # COPY ./linux-bin/* /usr/bin/
 
+COPY ./ssl_self_signed_cert.conf /tmp/
+RUN openssl req -x509 -out /localhost.crt -keyout /localhost.key  \
+            -newkey rsa:2048 -nodes -sha256 \ 
+            -subj '/CN=localhost' \
+            -config /tmp/ssl_self_signed_cert.conf
+RUN sed -i 's/ADAPTOR.HOSTPORT = :1935/ADAPTOR.HOSTPORT = :1935,-443/g' \
+           /opt/adobe/ams/conf/ams.ini \
+ && sed -i -e 's/<SSLCertificateFile><\/SSLCertificateFile>/<SSLCertificateFile>\/localhost.crt<\/SSLCertificateFile>/g' \
+           -e 's/<SSLCertificateKeyFile type="PEM"><\/SSLCertificateKeyFile>/<SSLCertificateKeyFile type="PEM">\/localhost.key<\/SSLCertificateKeyFile>/g' \
+           /opt/adobe/ams/conf/_defaultRoot_/Adaptor.xml
+
 COPY lic/* /opt/adobe/ams/lic/
 WORKDIR /opt/adobe/ams
 
