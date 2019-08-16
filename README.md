@@ -22,6 +22,13 @@ to run the server:
 /opt/adobe/ams/server start
 ```
 
+you'll also likely want to run the admin server
+(required for admin console to work)
+```
+./amsmgr adminserver start
+```
+
+
 Although the output says:
 
 > Starting Adobe Media Server (please check /var/log/messages)
