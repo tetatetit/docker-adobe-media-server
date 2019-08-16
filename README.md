@@ -74,7 +74,7 @@ ffmpeg -i sample.flv -f flv "rtmp://localhost:1935/live/your_stream_id"
 ```
 or
 ```
-ffmpeg -i sample.flv -f flv "rtmps://localhost:1935/live/your_stream_id"
+ffmpeg -i sample.flv -f flv "rtmps://localhost:443/live/your_stream_id"
 ```
 or
 ```
