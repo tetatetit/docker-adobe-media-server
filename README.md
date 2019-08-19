@@ -58,6 +58,14 @@ or
 curl rtmp://localhost:1935/vod/media/sample.flv > test.flv
 ```
 
+## Live
+
+Visit http://localhost to see sample files that ship with server, and you can use interactive demo to publish live video from your camera.  You can also playback from same application in the browser, or download:
+
+```
+rtmpdump -V --live -r rtmp://localhost:1935/live/cameraFeed -o test.flv
+```
+
 ## Troubleshooting
 
 Test whether ports are open to docker container
