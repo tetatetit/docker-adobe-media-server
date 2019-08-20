@@ -1,4 +1,4 @@
-FROM centos:6.6
+FROM centos:7
 MAINTAINER Sarah Allen <sarah@veriskope.com>
 
 #### Manual install instructions
@@ -24,6 +24,8 @@ RUN yum update -y                   && \
     yum install -y tar epel-release && \
     yum install -y expect           && \
     yum install -y openssl-devel    && \
+    yum install -y openssl          && \
+    yum install -y psmisc           && \
     yum clean all
 
 ##############################################################################
