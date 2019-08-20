@@ -12,6 +12,48 @@ to build the docker container image
 docker-compose build
 ```
 
+## Run server
+
+### Automatically
+#### In background
+
+```
+docker-compose up -d
+```
+#### In foregraund
+```
+docker-compose up
+```
+or
+```
+docker-compose run --service-ports ams
+```
+#### Helpers
+to check whether started:
+```
+docker-compose ps
+```
+to view logs (all redirected from `/opt/adobe/ams/logs` to stdout):
+```
+docker-compose logs
+```
+to exec some command (e.g. `bash`) inside running container
+```
+docker exec -it docker-adobe-media-server_ams_1 bash
+```
+and then feel free to exit from it - server will not stop
+
+#### To disable access log (if too verbose)
+
+* Option 1.
+  Uncomment `#command: /start.sh --disable-access-log`` in `docker-compose.yml`
+  before running `docker-compose up -d` or
+  `docker-compose run --service-ports ams`
+* Option 2. 
+  `docker-compose run --service-ports ams /start.sh --disable-access-log`
+
+### Manually (just for development/experiments/tests)
+
 Run and start bash (we will be running the server from here). Note: We have to use --service-ports because by default, the [`docker-compose run` command does not map ports](https://docs.docker.com/compose/reference/run/).
 ```
 docker-compose run --service-ports ams bash
@@ -28,17 +70,9 @@ you'll also likely want to run the admin server
 ./amsmgr adminserver start
 ```
 
-
-Although the output says:
-
-> Starting Adobe Media Server (please check /var/log/messages)
-
-the actual location of the logs is `/opt/adobe/ams/logs/`. There are several log files.
-
-Right now you need to stay logged into bash to keep the server running (see TODO below).
+In this mode you need to stay logged into bash to keep the server running.
 
 TODO:
-* Currently we use `docker-compose run` instead of `docker-compose up` because docker expects whatever is run in the container to send information to stdout/stderr, but AMS writes log files instead (similar to nginx, apache, and many others). There are a few ways to redirect logfiles to stdout/stderr, including tools like [dockerize](https://github.com/jwilder/dockerize).
 * Make it so LD_LIBRARY_PATH isn't needed (or add to .bashrc or something)
 
 # Testing the server

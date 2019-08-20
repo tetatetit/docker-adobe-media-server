@@ -65,7 +65,17 @@ RUN sed -i 's/ADAPTOR.HOSTPORT = :1935/ADAPTOR.HOSTPORT = :1935,-443/g' \
            /opt/adobe/ams/conf/ams.ini \
  && sed -i -e 's/<SSLCertificateFile><\/SSLCertificateFile>/<SSLCertificateFile>\/localhost.crt<\/SSLCertificateFile>/g' \
            -e 's/<SSLCertificateKeyFile type="PEM"><\/SSLCertificateKeyFile>/<SSLCertificateKeyFile type="PEM">\/localhost.key<\/SSLCertificateKeyFile>/g' \
-           /opt/adobe/ams/conf/_defaultRoot_/Adaptor.xml
+           /opt/adobe/ams/conf/_defaultRoot_/Adaptor.xml \
+ && sed -i -e 's/<MaxSize>[0-9]*<\/MaxSize>/<MaxSize>1073741824<\/MaxSize>/g' \
+           -e 's/<Schedule type="[a-zA-Z]*">[0-9:]*<\/Schedule>/<Schedule type="duration">518400<\/Schedule>/g' \
+           -e 's/<History>[0-9]*<\/History>/<History>1<\/History>/g' \
+           -e 's/<Rename>.*<\/Rename>/<Rename>false<\/Rename>/g' \
+           /opt/adobe/ams/conf/Logger.xml \
+              # Ommit below from logging/output, just to avoid confusion
+ && sed -i 's/ (please check \/var\/log\/messages)//g' \
+           /opt/adobe/ams/server \
+ && sed -i 's/ (please check \/var\/log\/messages)//g' \
+           /opt/adobe/ams/adminserver
 
 COPY lic/* /opt/adobe/ams/lic/
 WORKDIR /opt/adobe/ams
@@ -73,3 +83,5 @@ WORKDIR /opt/adobe/ams
 # Need to map these to host ports with docker run / compose
 EXPOSE 80 443 1111 1935
 
+COPY ./start.sh /
+CMD /start.sh
