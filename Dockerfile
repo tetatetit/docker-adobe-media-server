@@ -1,4 +1,4 @@
-FROM centos:7
+FROM centos:6
 MAINTAINER Sarah Allen <sarah@veriskope.com>
 
 #### Manual install instructions
