@@ -1,4 +1,4 @@
-FROM centos:6
+FROM centos:7
 MAINTAINER Sarah Allen <sarah@veriskope.com>
 
 #### Manual install instructions
@@ -36,12 +36,14 @@ WORKDIR /tmp/ams
 COPY install.exp .
 
 # note 5.0.15 is labeled .tar.gz but not actually gzipped
-RUN curl -O http://download.veriskope.com/AdobeMediaServer5_x64_5.0.15_Linux.tar.gz \
-    && tar xvf AdobeMediaServer5_x64_5.0.15_Linux.tar.gz -C . --strip-components=1 \
+#RUN curl -O http://download.veriskope.com/AdobeMediaServer5_x64_5.0.15_Linux.tar.gz \
+#    && tar xvf AdobeMediaServer5_x64_5.0.15_Linux.tar.gz -C . --strip-components=1 \
+COPY AdobeMediaServer5_x64.tar.gz .
+RUN tar xvf AdobeMediaServer5_x64.tar.gz -C . --strip-components=1 \
     && rm -Rf License.txt \
     && sed -i -e 's:read cont < /dev/tty:#read cont < /dev/tty:g' installAMS \
-    && sed -i -e 's:/sbin/sysctl:#/sbin/sysctl:g' server \
-    && expect install.exp \
+    && sed -i -e 's:/sbin/sysctl:#/sbin/sysctl:g' server
+RUN expect install.exp \
     && rm -rf /tmp/ams
 
 ##############################################################################
@@ -51,8 +53,8 @@ RUN curl -O http://download.veriskope.com/AdobeMediaServer5_x64_5.0.15_Linux.tar
 
 # VOLUME ["/opt/adobe/ams/applications"]
 
-COPY ./dev-tools.sh /tmp/.
-RUN /tmp/dev-tools.sh
+#COPY ./dev-tools.sh /tmp/.
+#RUN /tmp/dev-tools.sh
 
 # COPY ./linux-bin/* /usr/bin/
 
