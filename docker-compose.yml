@@ -1,4 +1,4 @@
-ams:
+ams-old-centos7:
     build: .
     hostname: mediaserver
     #command: /start.sh --disable-access-log
