@@ -1,5 +1,6 @@
 ams:
     build: .
+    domainname: ams.dev
     hostname: mediaserver
     #command: /start.sh --disable-access-log
     ports:

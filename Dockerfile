@@ -12,7 +12,7 @@ MAINTAINER Sarah Allen <sarah@veriskope.com>
 # http://download.macromedia.com/pub/adobemediaserver/5_0_6/AdobeMediaServer5_x64.tar.gz
 # http://download.macromedia.com/pub/adobemediaserver/5_0_5/AdobeMediaServer5_x64.tar.gz
 # 5.0.3 is different - http://download.macromedia.com/pub/adobemediaserver/AdobeMediaServer5_x64.tar.gz
-ENV AMS_VERSION=5_1_5
+ENV AMS_VERSION=5_1_16
 
 ##############################################################################
 # yum install will update lists of available packages
@@ -36,10 +36,8 @@ WORKDIR /tmp/ams
 COPY install.exp .
 
 # note 5.0.15 is labeled .tar.gz but not actually gzipped
-#RUN curl -O http://download.veriskope.com/AdobeMediaServer5_x64_5.0.15_Linux.tar.gz \
-#    && tar xvf AdobeMediaServer5_x64_5.0.15_Linux.tar.gz -C . --strip-components=1 \
-COPY AdobeMediaServer5_x64.tar.gz .
-RUN tar xvf AdobeMediaServer5_x64.tar.gz -C . --strip-components=1 \
+RUN curl -O https://releases.ams.veriskope.com/AdobeMediaServer5.0.16.tar.gz \
+    && tar xvf AdobeMediaServer5.0.16.tar.gz -C . --strip-components=1 \
     && rm -Rf License.txt \
     && sed -i -e 's:read cont < /dev/tty:#read cont < /dev/tty:g' installAMS \
     && sed -i -e 's:/sbin/sysctl:#/sbin/sysctl:g' server
@@ -52,11 +50,6 @@ RUN expect install.exp \
 #COPY conf/${AMS_VERSION}/Adaptor.xml /opt/adobe/ams/conf/_defaultRoot_/Adaptor.xml
 
 # VOLUME ["/opt/adobe/ams/applications"]
-
-#COPY ./dev-tools.sh /tmp/.
-#RUN /tmp/dev-tools.sh
-
-# COPY ./linux-bin/* /usr/bin/
 
 COPY ./ssl_self_signed_cert.conf /tmp/
 RUN openssl req -x509 -out /localhost.crt -keyout /localhost.key  \
