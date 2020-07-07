@@ -56,7 +56,7 @@ RUN openssl req -x509 -out /localhost.crt -keyout /localhost.key  \
             -newkey rsa:2048 -nodes -sha256 \ 
             -subj '/CN=localhost' \
             -config /tmp/ssl_self_signed_cert.conf
-RUN sed -i 's/ADAPTOR.HOSTPORT = :1935/ADAPTOR.HOSTPORT = :1935,-443/g' \
+RUN sed -i 's/ADAPTOR.HOSTPORT = :1935/ADAPTOR.HOSTPORT = :1935,-444/g' \
            /opt/adobe/ams/conf/ams.ini \
  && sed -i -e 's/<SSLCertificateFile><\/SSLCertificateFile>/<SSLCertificateFile>\/localhost.crt<\/SSLCertificateFile>/g' \
            -e 's/<SSLCertificateKeyFile type="PEM"><\/SSLCertificateKeyFile>/<SSLCertificateKeyFile type="PEM">\/localhost.key<\/SSLCertificateKeyFile>/g' \
@@ -76,7 +76,7 @@ COPY lic/* /opt/adobe/ams/lic/
 WORKDIR /opt/adobe/ams
 
 # Need to map these to host ports with docker run / compose
-EXPOSE 80 443 1111 1935
+EXPOSE 80 443 444 1111 1935
 
 COPY ./start.sh /
 CMD /start.sh
