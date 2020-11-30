@@ -1,4 +1,4 @@
-FROM centos:7
+FROM centos:8
 MAINTAINER Sarah Allen <sarah@veriskope.com>
 
 #### Manual install instructions
@@ -26,6 +26,9 @@ RUN yum update -y                   && \
     yum install -y openssl-devel    && \
     yum install -y openssl          && \
     yum install -y psmisc           && \
+    yum install -y file             && \
+    yum install -y nspr             && \
+    yum install -y glibc-langpack-en && \
     yum clean all
 
 ##############################################################################
