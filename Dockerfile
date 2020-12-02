@@ -12,7 +12,7 @@ MAINTAINER Sarah Allen <sarah@veriskope.com>
 # http://download.macromedia.com/pub/adobemediaserver/5_0_6/AdobeMediaServer5_x64.tar.gz
 # http://download.macromedia.com/pub/adobemediaserver/5_0_5/AdobeMediaServer5_x64.tar.gz
 # 5.0.3 is different - http://download.macromedia.com/pub/adobemediaserver/AdobeMediaServer5_x64.tar.gz
-ENV AMS_VERSION=5_1_16
+ENV AMS_VERSION=5_1_17
 
 ##############################################################################
 # yum install will update lists of available packages
@@ -36,8 +36,8 @@ WORKDIR /tmp/ams
 COPY install.exp .
 
 # note 5.0.15 is labeled .tar.gz but not actually gzipped
-RUN curl -O https://releases.ams.veriskope.com/AdobeMediaServer5.0.16.tar.gz \
-    && tar xvf AdobeMediaServer5.0.16.tar.gz -C . --strip-components=1 \
+RUN curl -O https://download.veriskope.com/AdobeMediaServer5.0.17b.tar.gz \
+    && tar xvf AdobeMediaServer5.0.17b.tar.gz -C . --strip-components=1 \
     && rm -Rf License.txt \
     && sed -i -e 's:read cont < /dev/tty:#read cont < /dev/tty:g' installAMS \
     && sed -i -e 's:/sbin/sysctl:#/sbin/sysctl:g' server
